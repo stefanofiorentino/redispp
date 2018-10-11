@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-int blocking_redispp(char **out_string, const char *hostname, int port, struct timeval *timeout)
+int blocking_redispp(char **out_string, const char *hostname, int port, struct timeval *timeout, const char *command)
 {
     redisContext *conn;
     redisReply *reply;
@@ -18,7 +18,8 @@ int blocking_redispp(char **out_string, const char *hostname, int port, struct t
     }
 
     /* PING server */
-    reply = static_cast<redisReply *>(redisCommand(conn, "PING"));
+
+    reply = static_cast<redisReply *>(redisCommand(conn, command));
     if (reply->str)
     {
         *out_string = strdup(reply->str);
