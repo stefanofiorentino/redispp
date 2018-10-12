@@ -8,7 +8,7 @@ int blocking_redispp(char **out_string, const char *hostname, int port, struct t
     redisContext *conn;
     redisReply *reply;
     conn = redisConnectWithTimeout(hostname, port, *timeout);
-    if (conn == NULL || conn->err)
+    if (conn == nullptr || conn->err)
     {
         if (conn)
         {
@@ -16,8 +16,6 @@ int blocking_redispp(char **out_string, const char *hostname, int port, struct t
         }
         return 1;
     }
-
-    /* PING server */
 
     reply = static_cast<redisReply *>(redisCommand(conn, command));
     if (reply->str)
