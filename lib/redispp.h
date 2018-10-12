@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-int blocking_redispp(char **out_string, const char *hostname, int port, struct timeval *timeout);
+int blocking_redispp(char **out_string, const char *hostname, int port, struct timeval *timeout, const char *command);
 
 #ifdef __cplusplus
 };

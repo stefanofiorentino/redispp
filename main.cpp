@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+#include <chrono>
+#include <thread>
 #include "lib/redispp.h"
 
 int main(int argc, char **argv)
@@ -10,10 +12,20 @@ int main(int argc, char **argv)
 
     struct timeval timeout = {1, 500000}; // 1.5 seconds
 
-    char *res;
-    int error_code = blocking_redispp(&res, hostname, port, &timeout);
-    if (!error_code)
+    char *res = nullptr;
+    int error_code;
+
+    int counter = 30;
+    while (counter > 0)
     {
-        std::cout << res << std::endl;
+        error_code = blocking_redispp(&res, hostname, port, &timeout, "PING");
+        if (!error_code)
+        {
+            std::cout << res << std::endl;
+        }
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+        counter--;
     }
+
+    return 0;
 }
